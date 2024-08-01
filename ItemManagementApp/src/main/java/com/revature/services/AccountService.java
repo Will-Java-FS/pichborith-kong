@@ -1,0 +1,30 @@
+package com.revature.services;
+
+import com.revature.models.Account;
+import com.revature.repositories.AccountRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class AccountService {
+
+    @Autowired
+    AccountRepo accountRepo;
+
+
+    public Account getAccountByUsername(String username) {
+        return accountRepo.findAccountByUsername(username);
+    }
+
+    @Transactional
+    public Account addAccount(Account account) {
+        String username = account.getUsername();
+        String password = account.getPassword();
+        if (!username.isEmpty() && password.length() >= 3) {
+            return accountRepo.save(account);
+        }
+
+        return null;
+    }
+}
