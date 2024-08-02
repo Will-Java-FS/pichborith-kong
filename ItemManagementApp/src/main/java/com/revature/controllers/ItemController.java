@@ -47,6 +47,15 @@ public class ItemController {
         return ResponseEntity.ok(newItem);
     }
 
+    @PutMapping("/{itemId}")
+    public ResponseEntity<Item> updateItem(@PathVariable int itemId,
+                                           @RequestBody Item item) {
+        Item updatedItem = itemService.updateItem(itemId, item);
+        if (updatedItem == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
 
+        return ResponseEntity.ok(updatedItem);
+    }
 
 }

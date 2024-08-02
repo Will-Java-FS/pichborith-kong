@@ -33,4 +33,18 @@ public class ItemService {
 
         return null;
     }
+
+    public Item updateItem(int itemId, Item item) {
+        Item existItem = itemRepo.findById(itemId).orElse(null);
+
+        if (existItem == null) {
+            return null;
+        }
+
+        existItem.setName(item.getName());
+        existItem.setQuantity(item.getQuantity());
+        itemRepo.save(existItem);
+
+        return existItem;
+    }
 }
