@@ -1,10 +1,10 @@
-package com.revature.ItemManagementApp;
+package com.revature;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ItemManagementApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {

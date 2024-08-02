@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/items")
 @CrossOrigin
@@ -14,6 +16,20 @@ public class ItemController {
     
     @Autowired
     ItemService itemService;
+
+    @GetMapping
+    public ResponseEntity<List<Item>> getItems() {
+        return ResponseEntity.ok(itemService.getItems());
+    }
+
+    @GetMapping("{itemId}")
+    public ResponseEntity<Item> getItem(@PathVariable int itemId) {
+        Item existItem = itemService.getItemById(itemId);
+        if (existItem == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(existItem);
+    }
     
     @PostMapping
     public ResponseEntity<Item> postItem(@RequestBody Item Item) {
@@ -30,6 +46,7 @@ public class ItemController {
 
         return ResponseEntity.ok(newItem);
     }
+
 
 
 }
