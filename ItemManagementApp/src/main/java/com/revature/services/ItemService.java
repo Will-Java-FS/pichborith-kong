@@ -47,4 +47,9 @@ public class ItemService {
 
         return existItem;
     }
+
+    public List<Item> getItemsByUserId(int userId) {
+        return itemRepo.findItemsByUserId(userId);
+    }
+
 }

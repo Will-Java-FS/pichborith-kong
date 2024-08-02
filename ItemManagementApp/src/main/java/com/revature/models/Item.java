@@ -1,7 +1,10 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,6 +20,16 @@ public class Item {
     private String name;
 
     private int quantity;
+
+//    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE,
+//                           CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "items")
+//    @JoinTable(name = "accounts_items",
+//        joinColumns = @JoinColumn(name = "item_id"),
+//        inverseJoinColumns = @JoinColumn(name = "user_id")
+//    )
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "items")
+    @JsonIgnore
+    private List<Account> accounts = new ArrayList<>();;
 
     public Item() {}
 
@@ -51,6 +64,14 @@ public class Item {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     @Override

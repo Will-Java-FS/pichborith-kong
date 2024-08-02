@@ -1,7 +1,10 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +21,14 @@ public class Account {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "accounts_items",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
+    @JsonIgnore
+    private List<Item> items = new ArrayList<>();
 
     public Account() {}
 
@@ -48,6 +59,22 @@ public class Account {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public void addItem(Item item) {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+
+        items.add(item);
     }
 
     @Override

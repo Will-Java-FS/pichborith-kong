@@ -27,4 +27,16 @@ public class AccountService {
 
         return null;
     }
+
+    public Account getAccountById(int id) {
+        return accountRepo.findById(id).orElse(null);
+    }
+
+    public Account getAccountWithItemsById(int id) {
+        return accountRepo.findAccountWithItemsById(id);
+    }
+
+    public void updateAccount(Account account) {
+        accountRepo.save(account);
+    }
 }
