@@ -63,6 +63,7 @@ public class AccountController {
 
         }
         List<Item> items = itemService.getItemsByUserId(userId);
+        System.out.println(items);
 
         return ResponseEntity.ok(items);
     }

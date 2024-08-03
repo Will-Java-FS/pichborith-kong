@@ -5,6 +5,7 @@ import com.revature.repositories.ItemRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,7 +50,21 @@ public class ItemService {
     }
 
     public List<Item> getItemsByUserId(int userId) {
-        return itemRepo.findItemsByUserId(userId);
+//        List<Item> items = new ArrayList<>();
+//        items.addAll(itemRepo.findItemsByUserId(userId));
+//        return items;
+        
+        return new ArrayList<>(itemRepo.findItemsByUserId(userId));
     }
 
+    public void deleteItemById(int itemId) {
+//        Item existItem = itemRepo.findById(itemId).orElse(null);
+//
+//        if (existItem != null) {
+//            itemRepo.delete(existItem);
+//        }
+
+        itemRepo.findById(itemId)
+                .ifPresent(existItem -> itemRepo.delete(existItem));
+    }
 }
