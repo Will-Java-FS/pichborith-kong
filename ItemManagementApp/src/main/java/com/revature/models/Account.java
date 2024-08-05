@@ -32,9 +32,14 @@ public class Account {
 
     public Account() {}
 
-    public Account(String password, String username) {
+    public Account( String username, String password) {
         this.password = password;
         this.username = username;
+    }
+
+    public Account(int id, String username, String password) {
+        this(username, password);
+        this.id = id;
     }
 
     public int getId() {
