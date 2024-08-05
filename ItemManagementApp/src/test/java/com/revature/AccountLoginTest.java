@@ -65,4 +65,50 @@ public class AccountLoginTest {
                                             Account.class);
         Assertions.assertEquals(expectedResult, actualResult);
     }
+
+    @Test
+    public void loginInvalidUsername() throws IOException, InterruptedException {
+        String json = """
+            {"username":"random",
+            "password":"123"
+            }
+            """;
+        HttpRequest postRequest = HttpRequest.newBuilder()
+                                             .uri(
+                                                 URI.create(
+                                                     "http://localhost:8080/accounts/login"))
+                                             .POST(
+                                                 HttpRequest.BodyPublishers.ofString(
+                                                     json))
+                                             .header("Content-Type",
+                                                     "application/json")
+                                             .build();
+        HttpResponse<String> response = webClient.send(postRequest,
+                                                       HttpResponse.BodyHandlers.ofString());
+        int status = response.statusCode();
+        Assertions.assertEquals(401, status, "Expected Status Code 401 - Actual Code was: "+ status);
+    }
+
+    @Test
+    public void loginInvalidPassword() throws IOException, InterruptedException {
+        String json = """
+            {"username":"bo",
+            "password":"wrongpassword"
+            }
+            """;
+        HttpRequest postRequest = HttpRequest.newBuilder()
+                                             .uri(
+                                                 URI.create(
+                                                     "http://localhost:8080/accounts/login"))
+                                             .POST(
+                                                 HttpRequest.BodyPublishers.ofString(
+                                                     json))
+                                             .header("Content-Type",
+                                                     "application/json")
+                                             .build();
+        HttpResponse<String> response = webClient.send(postRequest,
+                                                       HttpResponse.BodyHandlers.ofString());
+        int status = response.statusCode();
+        Assertions.assertEquals(401, status, "Expected Status Code 401 - Actual Code was: "+ status);
+    }
 }
