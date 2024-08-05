@@ -21,7 +21,7 @@ public class AccountService {
     public Account addAccount(Account account) {
         String username = account.getUsername();
         String password = account.getPassword();
-        if (!username.isEmpty() && password.length() >= 3) {
+        if (!username.isBlank() && password.length() >= 3) {
             return accountRepo.save(account);
         }
 
