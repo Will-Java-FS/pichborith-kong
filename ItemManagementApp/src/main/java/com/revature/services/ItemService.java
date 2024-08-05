@@ -28,7 +28,7 @@ public class ItemService {
 
     public Item addItem(Item item) {
         String name = item.getName();
-        if (!name.isEmpty()) {
+        if (!name.isBlank()) {
             return itemRepo.save(item);
         }
 

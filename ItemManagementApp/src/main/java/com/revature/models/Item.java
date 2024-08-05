@@ -35,11 +35,17 @@ public class Item {
 
     public Item(String name, int quantity) {
         this.name = name;
-        this.quantity = quantity;
+//        this.quantity = quantity > 0 ? quantity : 0;
+        this.quantity = Math.max(quantity, 0);
     }
 
     public Item(String name) {
         this(name, 0);
+    }
+
+    public Item(int id, String name, int quantity) {
+        this(name, quantity);
+        this.id = id;
     }
 
     public int getId() {
