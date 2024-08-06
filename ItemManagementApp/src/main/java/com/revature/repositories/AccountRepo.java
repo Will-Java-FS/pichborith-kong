@@ -16,8 +16,8 @@ public interface AccountRepo extends JpaRepository<Account, Integer> {
                    "LEFT JOIN items AS i " +
                    "ON ai.item_id=i.item_id " +
                    "WHERE a.user_id = ?1", nativeQuery = true)
-                   **** NOT WORKING YET ****
+                   **** NOT WORKING BECAUSE IT WILL RETURN AS LIST OF ACCOUNT ****
 */
-    @Query("SELECT a, i FROM Account a LEFT JOIN FETCH a.items i WHERE a.id = :id")
+    @Query("SELECT a FROM Account a LEFT JOIN FETCH a.items i WHERE a.id = :id")
     Account findAccountWithItemsById(int id);
 }
