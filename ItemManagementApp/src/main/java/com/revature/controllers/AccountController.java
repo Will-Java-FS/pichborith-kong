@@ -63,13 +63,13 @@ public class AccountController {
 
         }
         List<Item> items = itemService.getItemsByUserId(userId);
-        System.out.println(items);
+
 
         return ResponseEntity.ok(items);
     }
 
     @PostMapping("/{userId}/items/{itemId}")
-    public ResponseEntity<Item> addItemToAccount(@PathVariable int userId, @PathVariable int itemId) {
+    public ResponseEntity<List<Item>> addItemToAccount(@PathVariable int userId, @PathVariable int itemId) {
         Account existAccount = accountService.getAccountWithItemsById(userId);
         Item existItem = itemService.getItemById(itemId);
 
@@ -78,10 +78,16 @@ public class AccountController {
 
         }
 
+        List<Item> items = existAccount.getItems();
+
+        if (items.contains(existItem)) {
+            return new ResponseEntity<>(items, HttpStatus.CONFLICT);
+        }
+
         existAccount.addItem(existItem);
         accountService.updateAccount(existAccount);
 
-        return ResponseEntity.ok(existItem);
+        return ResponseEntity.ok(existAccount.getItems());
     }
     
 }
